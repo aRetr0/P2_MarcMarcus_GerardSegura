@@ -1,11 +1,17 @@
 import java.util.ArrayList;
 
 class Jugador<E extends ItipoPieza> {
-    private ArrayList<E> piezasVivas;
+
+    private final NodePieza piezasVivas;
 
     public Jugador(ArrayList<E> piezasVivas) {
-        // Guardamos una copia del estado inicial de las piezas vivas
-        this.piezasVivas = new ArrayList<>(piezasVivas);
+        NodePieza cabezera = new NodePieza(null, null);
+        NodePieza aux = cabezera;
+        for (E pieza : piezasVivas) {
+            aux.seguent = new NodePieza(pieza, null);
+            aux = aux.seguent;
+        }
+        this.piezasVivas = cabezera.seguent;
     }
 
     public ArrayList<E> getPiezasVivas() {
@@ -17,8 +23,8 @@ class Jugador<E extends ItipoPieza> {
         if (this.buscarEnPosicion(nuevaFila, nuevaColumna) != null)
             throw new RuntimeException("Posició ocupada per una peça del mateix jugador");
 
-        E item = this.buscarEnPosicion(filaAnterior,columnaAnterior);
-        if( item == null)
+        E item = this.buscarEnPosicion(filaAnterior, columnaAnterior);
+        if (item == null)
             throw new RuntimeException("Peça no trobada fila:" + filaAnterior + " columna:" + columnaAnterior);
 
         item.setPosicion(nuevaFila, nuevaColumna);
@@ -40,11 +46,20 @@ class Jugador<E extends ItipoPieza> {
         E item = this.buscarEnPosicion(fila, columna);
         if (item != null) {
             piezasVivas.remove(item);
-            if (item.fiJoc())
-                throw new FiJocException();
+            if (item.fiJoc()) throw new FiJocException();
             System.out.println("Peça eliminada.");
             return true;
         }
         return false;
+    }
+
+    private class NodePieza {
+        public E pieza;
+        public NodePieza seguent;
+
+        public NodePieza(E pieza, NodePieza seguent) {
+            this.pieza = pieza;
+            this.seguent = seguent;
+        }
     }
 }

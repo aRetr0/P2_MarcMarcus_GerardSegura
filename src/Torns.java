@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class Torns <E>{
+public class Torns<E> {
 
     private ArrayList<E> llistatTorns;
 
@@ -15,7 +15,7 @@ public class Torns <E>{
     public Torns(String nomFitxer) throws IOException {
         this();
         carregarDesDeFitxer(nomFitxer);
-        if(llistatTorns.isEmpty()) throw new IOException("Llistat buit");
+        if (llistatTorns.isEmpty()) throw new IOException("Llistat buit");
     }
 
     // Mètode per afegir un torn al final de la llista

@@ -1,9 +1,4 @@
-public class Pieza implements ItipoPieza{
-
-    // atributs d'objectes
-    private final char tipo;
-    private int fila;
-    private char columna;
+public class Pieza implements ItipoPieza {
 
     // constants de la classe
     public static final char REY = 'R';
@@ -12,14 +7,17 @@ public class Pieza implements ItipoPieza{
     public static final char ALFIL = 'A';
     public static final char CABALLO = 'C';
     public static final char PEON = 'P';
-
+    // atributs d'objectes
+    private final char tipo;
+    private int fila;
+    private char columna;
 
 
     public Pieza(char tipo, int fila, int columna) {
         // comprovem que no dona excepció el tipus
         this.checkTipo(tipo);
         //comprovem que no dona excepció la posició
-        this.setPosicion(fila,columna);
+        this.setPosicion(fila, columna);
         this.tipo = tipo;
     }
 
@@ -32,15 +30,15 @@ public class Pieza implements ItipoPieza{
     }
 
     public int getColumna() {
-        return (int) this.columna-65;
+        return (int) this.columna - 65;
     }
 
     @Override
     public void setPosicion(int fila, int columna) {
-        if( fila< 0 || fila > 8 || columna < 0 || columna > 8)
+        if (fila < 0 || fila > 8 || columna < 0 || columna > 8)
             throw new IllegalArgumentException("posició incorrecte");
         this.fila = fila;
-        this.columna = (char) (65+columna);
+        this.columna = (char) (65 + columna);
     }
 
     @Override
@@ -56,7 +54,7 @@ public class Pieza implements ItipoPieza{
             case ALFIL:
             case CABALLO:
             case PEON:
-                return ;
+                return;
             default:
                 throw new IllegalArgumentException("Desconegut");
         }
