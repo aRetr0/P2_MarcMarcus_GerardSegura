@@ -15,7 +15,13 @@ class Jugador<E extends ItipoPieza> {
     }
 
     public ArrayList<E> getPiezasVivas() {
-        return piezasVivas;
+        ArrayList<E> piezas = new ArrayList<>();
+        NodePieza aux = piezasVivas;
+        while (aux.seguent != null) {
+            piezas.add(aux.pieza);
+            aux = aux.seguent;
+        }
+        return piezas;
     }
 
     // Método para mover una pieza usando la posición anterior
