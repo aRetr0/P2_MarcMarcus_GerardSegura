@@ -17,7 +17,7 @@ class Jugador<E extends ItipoPieza> {
     public ArrayList<E> getPiezasVivas() {
         ArrayList<E> piezas = new ArrayList<>();
         NodePieza aux = piezasVivas;
-        while (aux.seguent != null) {
+        while (aux != null) {
             piezas.add(aux.pieza);
             aux = aux.seguent;
         }
