@@ -17,8 +17,8 @@ class Jugador<E extends ItipoPieza> {
         if (this.buscarEnPosicion(nuevaFila, nuevaColumna) != null)
             throw new RuntimeException("Posició ocupada per una peça del mateix jugador");
 
-        E item = this.buscarEnPosicion(filaAnterior,columnaAnterior);
-        if( item == null)
+        E item = this.buscarEnPosicion(filaAnterior, columnaAnterior);
+        if (item == null)
             throw new RuntimeException("Peça no trobada fila:" + filaAnterior + " columna:" + columnaAnterior);
 
         item.setPosicion(nuevaFila, nuevaColumna);
