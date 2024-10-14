@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 class Jugador<E extends ItipoPieza> {
 
-    private final NodePieza piezasVivas;
+    private NodePieza piezasVivas;
 
     public Jugador(ArrayList<E> piezasVivas) {
         NodePieza cabezera = new NodePieza(null, null);
@@ -24,7 +24,7 @@ class Jugador<E extends ItipoPieza> {
         return piezas;
     }
 
-    // Método para mover una pieza usando la posición anterior
+    // Método para mover una pieza usando la posición anterior TODO
     public void moverPieza(int columnaAnterior, int filaAnterior, int nuevaColumna, int nuevaFila) {
         if (this.buscarEnPosicion(nuevaFila, nuevaColumna) != null)
             throw new RuntimeException("Posició ocupada per una peça del mateix jugador");
@@ -39,22 +39,34 @@ class Jugador<E extends ItipoPieza> {
 
     // Método para buscar en una posición específica
     private E buscarEnPosicion(int nuevaFila, int nuevaColumna) {
-        for (E item : piezasVivas) {
-            if (item.getFila() == nuevaFila && item.getColumna() == nuevaColumna) {
-                return item;
+        NodePieza aux = piezasVivas;
+        while (aux != null) {
+            if (aux.pieza.getColumna() == nuevaColumna && aux.pieza.getFila() == nuevaFila) {
+                return aux.pieza;
             }
+            aux = aux.seguent;
         }
         return null;
     }
 
-    // Método para buscar y eliminar una pieza en una posición específica
+    // Método para buscar y eliminar una pieza en una posición específica TODO
     public boolean eliminarPiezaEnPosicion(int columna, int fila) throws FiJocException {
-        E item = this.buscarEnPosicion(fila, columna);
-        if (item != null) {
-            piezasVivas.remove(item);
-            if (item.fiJoc()) throw new FiJocException();
-            System.out.println("Peça eliminada.");
-            return true;
+        NodePieza aux = piezasVivas;
+        NodePieza anterior = null;
+        while (aux != null) {
+            if (aux.pieza.getColumna() == columna && aux.pieza.getFila() == fila) {
+                if (anterior == null) {
+                    piezasVivas = aux.seguent;
+                } else {
+                    anterior.seguent = aux.seguent;
+                }
+                if (aux.pieza.fiJoc()) {
+                    throw new FiJocException();
+                }
+                return true;
+            }
+            anterior = aux;
+            aux = aux.seguent;
         }
         return false;
     }
