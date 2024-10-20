@@ -5,13 +5,16 @@ class Jugador<E extends ItipoPieza> {
     private NodePieza piezasVivas;
 
     public Jugador(ArrayList<E> piezasVivas) {
-        NodePieza cabezera = new NodePieza(null, null);
-        NodePieza aux = cabezera;
+        NodePieza aux = null;
         for (E pieza : piezasVivas) {
-            aux.seguent = new NodePieza(pieza, null);
-            aux = aux.seguent;
+            if (this.piezasVivas == null) {
+                this.piezasVivas = new NodePieza(pieza, null);
+                aux = this.piezasVivas;
+            } else {
+                aux.seguent = new NodePieza(pieza, null);
+                aux = aux.seguent;
+            }
         }
-        this.piezasVivas = cabezera.seguent;
     }
 
     public ArrayList<E> getPiezasVivas() {
@@ -24,7 +27,6 @@ class Jugador<E extends ItipoPieza> {
         return piezas;
     }
 
-    // Método para mover una pieza usando la posición anterior TODO
     public void moverPieza(int columnaAnterior, int filaAnterior, int nuevaColumna, int nuevaFila) {
         if (this.buscarEnPosicion(nuevaFila, nuevaColumna) != null)
             throw new RuntimeException("Posició ocupada per una peça del mateix jugador");
@@ -37,7 +39,6 @@ class Jugador<E extends ItipoPieza> {
         System.out.println("Peça moguda");
     }
 
-    // Método para buscar en una posición específica
     private E buscarEnPosicion(int nuevaFila, int nuevaColumna) {
         NodePieza aux = piezasVivas;
         while (aux != null) {
@@ -49,7 +50,6 @@ class Jugador<E extends ItipoPieza> {
         return null;
     }
 
-    // Método para buscar y eliminar una pieza en una posición específica TODO
     public boolean eliminarPiezaEnPosicion(int columna, int fila) throws FiJocException {
         NodePieza aux = piezasVivas;
         NodePieza anterior = null;
