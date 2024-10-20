@@ -4,9 +4,8 @@ import java.util.NoSuchElementException;
 
 public class Torns<E> {
 
-    private NodeTorn llistatTorns; // seqüència enllaçada de torns
+    private final NodeTorn llistatTorns; // seqüència enllaçada de torns
     // amb capçalera
-    private String nomFitxer;
 
     // Constructor que inicialitza la sequencia de torns buida
     public Torns() {
@@ -17,19 +16,18 @@ public class Torns<E> {
     // Constructor que carrega la llista de torns des d'un fitxer
     public Torns(String nomFitxer) throws IOException {
         this();
-        this.nomFitxer = nomFitxer;
         carregarDesDeFitxer(nomFitxer);
-        if (this.isEmpty()) throw new IOException("Llistat buit");
+        if (llistatTorns.isEmpty()) throw new IOException("Llistat buit");
     }
 
     // Mètode per afegir un torn al final de la llista
     public void afegirTorn(E torn) {
-        NodeTorn noutTorn = new NodeTorn(torn, null);
+        NodeTorn nouTorn = new NodeTorn(torn, null);
         NodeTorn actual = llistatTorns;
         while (actual.seguent != null) {
             actual = actual.seguent;
         }
-        actual.seguent = noutTorn;
+        actual.seguent = nouTorn;
     }
 
     // Mètode per agafar el primer torn a la llista i s'elimina
@@ -74,13 +72,6 @@ public class Torns<E> {
         return true;
     }
 
-    public String getNomFitxer() {
-        return this.nomFitxer;
-    }
-
-    public void setNomFitxer(String nomFitxer) {
-        this.nomFitxer = nomFitxer;
-    }
 
     private class NodeTorn {
         public E moviment;
@@ -91,6 +82,16 @@ public class Torns<E> {
             this.seguent = seguent;
         }
 
+        public boolean isEmpty() {
+            NodeTorn actual = llistatTorns.seguent;
+            while (actual != null) {
+                if (actual.moviment != null) {
+                    return false;
+                }
+                actual = actual.seguent;
+            }
+            return true;
+        }
     }
 
 }
